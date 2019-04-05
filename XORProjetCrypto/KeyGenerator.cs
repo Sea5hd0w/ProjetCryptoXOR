@@ -96,6 +96,8 @@ namespace XORProjetCrypto
 
         public string GenerateKey()
         {
+            bool print = false;
+
             bool incrementNext = false;
             for (int i = key.Length - 1; i >= 0; i--)
             {
@@ -113,12 +115,11 @@ namespace XORProjetCrypto
                     currentCharPosition[i] = (currentCharPosition[i] + 1) % charUsed.Length;
                     key[i] = charUsed[currentCharPosition[i]];
                 }
-    
+                
                 //Case "zzzzzz"
                 if (i == 0 && incrementNext == true) incrementNext = false;
 
                 //Console.WriteLine(i + " " + startKey[i] + " " + key[i] + " " + currentCharPosition[i]);
-
             }
             loop++;
             return new string(key);

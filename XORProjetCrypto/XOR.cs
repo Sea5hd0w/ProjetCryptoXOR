@@ -36,6 +36,14 @@ namespace XORProjetCrypto
             return text;
         }
 
+        public static string EncryptOrDecrypt(string cipher, string key)
+        {
+            var result = new StringBuilder();
+            for (int c = 0; c < cipher.Length; c++)
+                    result.Append((char)((uint)cipher[c] ^ (uint)key[c % key.Length]));
+            return result.ToString();
+        }
+
         public static string StringToBinary(string data)
         {
             StringBuilder sb = new StringBuilder();

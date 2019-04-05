@@ -21,18 +21,18 @@ namespace XORProjetCrypto
 
         public double CheckString(string line)
         {
-            double count = 0;
+            /*
             if(line.IndexOf("bonjour", StringComparison.CurrentCultureIgnoreCase) != -1)
             {
                 count = Math.Pow("bonjour".Length, 3);
             }
-
-            /*
+            */
+            
             double count = 0;
             foreach(string word in words)
             {
-                if (line.Contains(word)) count = count + Math.Pow(word.Length, 3);
-            }*/
+                if (line.IndexOf(word, StringComparison.CurrentCultureIgnoreCase) != -1) count = count + Math.Pow(word.Length, 3);
+            }
             return count;
         }
     }
