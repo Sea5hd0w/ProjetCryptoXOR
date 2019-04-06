@@ -29,13 +29,21 @@ namespace XORProjetCrypto
         string endKey3 = string.Empty;
         string key3 = string.Empty;
 
+        string startKey4 = string.Empty;
+        string endKey4 = string.Empty;
+        string key4 = string.Empty;
+
+        string startKey5 = string.Empty;
+        string endKey5 = string.Empty;
+        string key5 = string.Empty;
+
         List<string> pathDocuments = new List<string>();
-        List<Tuple<string, List<string>>> document = new List<Tuple<string, List<string>>>();
+        List<Tuple<string, string>> document = new List<Tuple<string, string>>();
 
         //Tuple<string, int>
         List<string> results = new List<string>();
 
-        Thread decrypt;
+        //Thread decrypt;
 
         public Form1()
         {
@@ -88,7 +96,7 @@ namespace XORProjetCrypto
 
         private void buttonDictionnaire_Click(object sender, EventArgs e)
         {
-            openFileDialog.InitialDirectory = "d:\\";
+            openFileDialog.InitialDirectory = "c:\\";
             openFileDialog.RestoreDirectory = true;
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
@@ -109,7 +117,7 @@ namespace XORProjetCrypto
                 {
                     LoadFiles();
 
-                    if (textBoxStartkey1.Text.Length == 6 & textBoxEndKey1.Text.Length == 6)
+                    if (textBoxStartkey1.Text.Length == textBoxEndKey1.Text.Length)
                     {
                         Console.WriteLine("Task 1 - Start");
                         endKey1 = textBoxEndKey1.Text;
@@ -117,7 +125,7 @@ namespace XORProjetCrypto
 
                         var t1 = Task.Factory.StartNew(() => Start1());
                     }
-                    if (textBoxStartkey2.Text.Length == 6 & textBoxEndKey2.Text.Length == 6)
+                    if (textBoxStartkey2.Text.Length == textBoxEndKey2.Text.Length)
                     {
                         Console.WriteLine("Task 2 - Start");
                         endKey2 = textBoxEndKey2.Text;
@@ -125,13 +133,29 @@ namespace XORProjetCrypto
 
                         var t2 = Task.Factory.StartNew(() => Start2());
                     }
-                    if (textBoxStartkey3.Text.Length == 6 & textBoxEndKey3.Text.Length == 6)
+                    if (textBoxStartkey3.Text.Length == textBoxEndKey3.Text.Length)
                     {
                         Console.WriteLine("Task 3 - Start");
                         endKey3 = textBoxEndKey3.Text;
                         key3 = textBoxStartkey3.Text;
 
                         var t3 = Task.Factory.StartNew(() => Start3());
+                    }
+                    if (textBoxStartkey4.Text.Length == textBoxEndKey4.Text.Length)
+                    {
+                        Console.WriteLine("Task 4 - Start");
+                        endKey4 = textBoxEndKey4.Text;
+                        key4 = textBoxStartkey4.Text;
+
+                        var t4 = Task.Factory.StartNew(() => Start4());
+                    }
+                    if (textBoxStartkey5.Text.Length == textBoxEndKey5.Text.Length)
+                    {
+                        Console.WriteLine("Task 5 - Start");
+                        endKey5 = textBoxEndKey5.Text;
+                        key5 = textBoxStartkey5.Text;
+
+                        var t5 = Task.Factory.StartNew(() => Start5());
                     }
 
                     /*
@@ -171,21 +195,21 @@ namespace XORProjetCrypto
                 i++;
                 List<string> write = new List<string>();
 
-                foreach (Tuple<string, List<string>> doc in document)
+                foreach (Tuple<string, string> doc in document)
                 {
-                    foreach (string line in doc.Item2)
-                    {
+                    //foreach (string line in doc.Item2)
+                    //{
                         /*
                         textBin = XOR.Decode(line, key);
                         textChar = XOR.BinaryToString(textBin);
                         scoreKey += dictionary.CheckString(textChar);
                         */
-                        string t = XOR.EncryptOrDecrypt(line, key1);
+                        string t = XOR.EncryptOrDecrypt(doc.Item2, key1);
                         textChar += t;
                         scoreKey += dictionary.CheckString(t);
 
-                    }
-                    if (scoreKey > 100) using (StreamWriter sw = File.AppendText("d:\\test.txt")) {sw.WriteLine("Task 1 - File:[" + doc.Item1 + "] - Key:[" + key1 + "] - Score:[" + scoreKey + "]");}
+                    //}
+                    if (scoreKey > 100) using (StreamWriter sw = File.AppendText("c:\\test.txt")) {sw.WriteLine("Task 1 - File:[" + doc.Item1 + "] - Key:[" + key1 + "] - Score:[" + scoreKey + "]");}
                     //Console.WriteLine("File:[" + doc.Item1 + "] - Key:[" + key1 + "] - Score:[" + scoreKey + "]" + textChar);
                     
                     scoreKey = 0;
@@ -213,21 +237,21 @@ namespace XORProjetCrypto
                 i++;
                 List<string> write = new List<string>();
 
-                foreach (Tuple<string, List<string>> doc in document)
+                foreach (Tuple<string, string> doc in document)
                 {
-                    foreach (string line in doc.Item2)
-                    {
+                    //foreach (string line in doc.Item2)
+                    //{
                         /*
                         textBin = XOR.Decode(line, key);
                         textChar = XOR.BinaryToString(textBin);
                         scoreKey += dictionary.CheckString(textChar);
                         */
-                        string t = XOR.EncryptOrDecrypt(line, key2);
+                        string t = XOR.EncryptOrDecrypt(doc.Item2, key2);
                         textChar += t;
                         scoreKey += dictionary.CheckString(t);
 
-                    }
-                    if (scoreKey > 100) using (StreamWriter sw = File.AppendText("d:\\test.txt")) { sw.WriteLine("Task 2 - File:[" + doc.Item1 + "] - Key:[" + key2 + "] - Score:[" + scoreKey + "]"); }
+                    //}
+                    if (scoreKey > 100) using (StreamWriter sw = File.AppendText("c:\\test.txt")) { sw.WriteLine("Task 2 - File:[" + doc.Item1 + "] - Key:[" + key2 + "] - Score:[" + scoreKey + "]"); }
                     //Console.WriteLine("File:[" + doc.Item1 + "] - Key:[" + key + "] - Score:[" + scoreKey + "]" + textChar);
 
                     scoreKey = 0;
@@ -255,20 +279,20 @@ namespace XORProjetCrypto
                 i++;
                 List<string> write = new List<string>();
 
-                foreach (Tuple<string, List<string>> doc in document)
+                foreach (Tuple<string, string> doc in document)
                 {
-                    foreach (string line in doc.Item2)
-                    {
+                    //foreach (string line in doc.Item2)
+                    //{
                         /*
                         textBin = XOR.Decode(line, key);
                         textChar = XOR.BinaryToString(textBin);
                         scoreKey += dictionary.CheckString(textChar);
                         */
-                        string t = XOR.EncryptOrDecrypt(line, key3);
+                        string t = XOR.EncryptOrDecrypt(doc.Item2, key3);
                         textChar += t;
                         scoreKey += dictionary.CheckString(t);
-                    }
-                    if (scoreKey > 100) using (StreamWriter sw = File.AppendText("d:\\test.txt")) { sw.WriteLine("Task 3 - File:[" + doc.Item1 + "] - Key:[" + key3 + "] - Score:[" + scoreKey + "]"); }
+                    //}
+                    if (scoreKey > 100) using (StreamWriter sw = File.AppendText("c:\\test.txt")) { sw.WriteLine("Task 3 - File:[" + doc.Item1 + "] - Key:[" + key3 + "] - Score:[" + scoreKey + "]"); }
                     //Console.WriteLine("File:[" + doc.Item1 + "] - Key:[" + key + "] - Score:[" + scoreKey + "]" + textChar);
 
                     scoreKey = 0;
@@ -277,6 +301,88 @@ namespace XORProjetCrypto
                 textChar = "";
             }
             Console.WriteLine("Task 3 - End");
+        }
+
+        private void Start4()
+        {
+            double scoreKey = 0;
+            string textBin;
+            string textChar = "";
+
+
+            KeyGenerator keyGen = new KeyGenerator("abcdefghijklmnopqrstuvwxyz", 6, textBoxStartkey4.Text, textBoxEndKey4.Text);
+            Dictionary dictionary = new Dictionary(dictionnairePath);
+            long i = 0;
+
+            while (!key4.SequenceEqual(endKey4))
+            {
+                key4 = keyGen.GenerateKey();
+                i++;
+                List<string> write = new List<string>();
+
+                foreach (Tuple<string, string> doc in document)
+                {
+                    //foreach (string line in doc.Item2)
+                    //{
+                    /*
+                    textBin = XOR.Decode(line, key);
+                    textChar = XOR.BinaryToString(textBin);
+                    scoreKey += dictionary.CheckString(textChar);
+                    */
+                    string t = XOR.EncryptOrDecrypt(doc.Item2, key4);
+                    textChar += t;
+                    scoreKey += dictionary.CheckString(t);
+                    //}
+                    if (scoreKey > 100) using (StreamWriter sw = File.AppendText("c:\\test.txt")) { sw.WriteLine("Task 4 - File:[" + doc.Item1 + "] - Key:[" + key4 + "] - Score:[" + scoreKey + "]"); }
+                    //Console.WriteLine("File:[" + doc.Item1 + "] - Key:[" + key + "] - Score:[" + scoreKey + "]" + textChar);
+
+                    scoreKey = 0;
+                }
+                //Console.WriteLine(key);
+                textChar = "";
+            }
+            Console.WriteLine("Task 4 - End");
+        }
+
+        private void Start5()
+        {
+            double scoreKey = 0;
+            string textBin;
+            string textChar = "";
+
+
+            KeyGenerator keyGen = new KeyGenerator("abcdefghijklmnopqrstuvwxyz", 6, textBoxStartkey5.Text, textBoxEndKey5.Text);
+            Dictionary dictionary = new Dictionary(dictionnairePath);
+            long i = 0;
+
+            while (!key5.SequenceEqual(endKey5))
+            {
+                key5 = keyGen.GenerateKey();
+                i++;
+                List<string> write = new List<string>();
+
+                foreach (Tuple<string, string> doc in document)
+                {
+                    //foreach (string line in doc.Item2)
+                    //{
+                    /*
+                    textBin = XOR.Decode(line, key);
+                    textChar = XOR.BinaryToString(textBin);
+                    scoreKey += dictionary.CheckString(textChar);
+                    */
+                    string t = XOR.EncryptOrDecrypt(doc.Item2, key5);
+                    textChar += t;
+                    scoreKey += dictionary.CheckString(t);
+                    //}
+                    if (scoreKey > 100) using (StreamWriter sw = File.AppendText("c:\\test.txt")) { sw.WriteLine("Task 5 - File:[" + doc.Item1 + "] - Key:[" + key5 + "] - Score:[" + scoreKey + "]"); }
+                    //Console.WriteLine("File:[" + doc.Item1 + "] - Key:[" + key + "] - Score:[" + scoreKey + "]" + textChar);
+
+                    scoreKey = 0;
+                }
+                //Console.WriteLine(key);
+                textChar = "";
+            }
+            Console.WriteLine("Task 5 - End");
         }
 
         private void buttonPause_Click(object sender, EventArgs e)
@@ -289,8 +395,8 @@ namespace XORProjetCrypto
 
             foreach(string path in files)
             {
-                string[] logFile = File.ReadAllLines(path);
-                document.Add(new Tuple<string, List<string>>(path, new List<string>(logFile)));
+                string logFile = File.ReadAllText(path);
+                document.Add(new Tuple<string, string>(path, logFile));
             }
         }
 
@@ -304,18 +410,18 @@ namespace XORProjetCrypto
 
             textBoxResult.Text += key1 + Environment.NewLine;
 
-            foreach (Tuple<string, List<string>> doc in document)
+            foreach (Tuple<string, string> doc in document)
             {
-                foreach (string line in doc.Item2)
-                {
+                //foreach (string line in doc.Item2)
+                //{
                     /*
                     textBin = XOR.Decode(line, key);
                     textChar += XOR.BinaryToString(textBin);
                     */
-                    textChar += XOR.EncryptOrDecrypt(line, key1);
+                    textChar += XOR.EncryptOrDecrypt(doc.Item2, key1);
 
                     textBoxResult.Text += textChar;
-                }
+                //}
                 textBoxResult.Text += Environment.NewLine;
                 textBoxResult.Text += Environment.NewLine;
             }
